@@ -3,59 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人響應式網頁</title>
+    <title>個人響應式網頁 - 按鈕切換版</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; border: 2px solid #ccc; padding: 20px; border-radius: 10px; }
+        /* --- 基礎排版 --- */
+        body { font-family: "微軟正黑體", Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
-        /* 預設隱藏所有區塊 */
-        .desktop-content, .mobile-content { display: none; }
+        /* --- 按鈕樣式 --- */
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        button { 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            border: none; 
+            background-color: #e0e0e0; 
+            border-radius: 5px; 
+            transition: 0.3s;
+        }
+        button:hover { background-color: #d5d5d5; }
+        
+        /* 當前選中按鈕的樣式 */
+        button.active { background-color: #3498db; color: white; font-weight: bold; }
 
-        /* --- 判斷邏輯：桌面版 (螢幕寬度 > 768px) --- */
-        @media screen and (min-width: 769px) {
-            .desktop-content { display: block; background-color: #f0f8ff; }
-            h1 { color: #2c3e50; }
-            .content-box { display: flex; gap: 20px; }
-            .section { flex: 1; border: 1px solid #ddd; padding: 10px; }
+        /* --- 內容區塊樣式 (預設全部隱藏) --- */
+        .tab-content { display: none; padding: 20px; border: 1px solid #eee; border-radius: 5px; animation: fadeIn 0.5s; }
+        
+        /* 只有帶有 active class 的區塊才會顯示 */
+        .tab-content.active { display: block; }
+
+        /* 淡入動畫效果 */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- 判斷邏輯：手機版專屬樣式 (螢幕寬度 <= 768px) --- */
+        @media screen and (max-width: 768px) {
+            .container { padding: 15px; border-top: 5px solid #e74c3c; } /* 手機版加上紅色頂部邊框以示區別 */
+            .tab-buttons { flex-direction: column; } /* 手機版按鈕變成直向排列 */
+            button { width: 100%; } /* 按鈕佔滿寬度，方便手指點擊 */
+            h1 { font-size: 1.5rem; color: #e74c3c; }
         }
 
-        /* --- 判斷邏輯：手機版 (螢幕寬度 <= 768px) --- */
-        @media screen and (max-width: 768px) {
-            .mobile-content { display: block; background-color: #fff0f0; }
-            h1 { color: #e74c3c; font-size: 1.5rem; }
-            .section { margin-bottom: 20px; border-bottom: 2px dashed #ff7675; padding-bottom: 10px; }
+        /* --- 判斷邏輯：桌面版專屬樣式 (螢幕寬度 > 768px) --- */
+        @media screen and (min-width: 769px) {
+            .container { border-top: 5px solid #3498db; } /* 桌面版加上藍色頂部邊框 */
+            h1 { color: #2c3e50; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="desktop-content">
-        <h1>💻 桌面版專屬介面</h1>
-        <div class="content-box">
-            <div class="section">
-                <h3>個人簡介</h3>
-                <p>這是桌面版顯示的詳細簡介，內容較為豐富且採用並排設計。</p>
-            </div>
-            <div class="section">
-                <h3>興趣專長</h3>
-                <p>專長：網頁開發、資料分析。<br>興趣：攝影、旅行。</p>
-            </div>
-        </div>
+    <h1 id="device-title">網頁載入中...</h1>
+    
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('profile', this)">👤 個人簡介</button>
+        <button class="tab-btn" onclick="switchTab('skills', this)">🎯 興趣專長</button>
     </div>
 
-    <div class="mobile-content">
-        <h1>📱 手機版專屬介面</h1>
-        <div class="section">
-            <h3>👤 個人簡介</h3>
-            <p>手機版採用直向堆疊排版，方便滑動閱讀。</p>
-        </div>
-        <div class="section">
-            <h3>🎯 興趣專長</h3>
-            <p>專長：Web Design / 興趣：Hiking</p>
-        </div>
+    <div id="profile" class="tab-content active">
+        <h2>關於我</h2>
+        <p>這是一段個人簡介。本網頁結合了 CSS 媒體查詢 (Media Queries) 來達到手機與桌機不同版面的需求，同時加入了 JavaScript 實現內容的按鈕切換。</p>
+        <p>您可以嘗試縮放瀏覽器視窗，觀察按鈕排列與標題顏色的變化。</p>
+    </div>
+
+    <div id="skills" class="tab-content">
+        <h2>我的技能樹</h2>
+        <ul>
+            <li><strong>專長：</strong>網頁前端開發 (HTML, CSS, JavaScript)、Python 程式設計。</li>
+            <li><strong>興趣：</strong>攝影、閱讀科幻小說、登山。</li>
+            <li><strong>目標：</strong>成為一名全端工程師。</li>
+        </ul>
     </div>
 </div>
+
+<script>
+    // --- 功能 1：按鈕切換邏輯 (JavaScript) ---
+    function switchTab(tabId, clickedButton) {
+        // 1. 將所有內容區塊隱藏 (移除 active class)
+        const allContents = document.querySelectorAll('.tab-content');
+        allContents.forEach(content => content.classList.remove('active'));
+
+        // 2. 將所有按鈕恢復預設樣式 (移除 active class)
+        const allButtons = document.querySelectorAll('.tab-btn');
+        allButtons.forEach(btn => btn.classList.remove('active'));
+
+        // 3. 顯示被點擊對應的內容區塊
+        document.getElementById(tabId).classList.add('active');
+
+        // 4. 將被點擊的按鈕加上高亮樣式
+        clickedButton.classList.add('active');
+    }
+
+    // --- 功能 2：動態顯示目前是手機還是桌機 (輔助說明用) ---
+    function updateDeviceText() {
+        const titleElement = document.getElementById('device-title');
+        // 使用 window.innerWidth 判斷當前視窗寬度
+        if (window.innerWidth <= 768) {
+            titleElement.innerText = "📱 個人檔案 (手機版顯示)";
+        } else {
+            titleElement.innerText = "💻 個人檔案 (桌機版顯示)";
+        }
+    }
+
+    // 監聽視窗大小改變事件
+    window.addEventListener('resize', updateDeviceText);
+    
+    // 網頁剛載入時先執行一次判斷
+    updateDeviceText();
+</script>
 
 </body>
 </html>
