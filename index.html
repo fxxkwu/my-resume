@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人響應式網頁</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; border: 2px solid #ccc; padding: 20px; border-radius: 10px; }
+        
+        /* 預設隱藏所有區塊 */
+        .desktop-content, .mobile-content { display: none; }
+
+        /* --- 判斷邏輯：桌面版 (螢幕寬度 > 768px) --- */
+        @media screen and (min-width: 769px) {
+            .desktop-content { display: block; background-color: #f0f8ff; }
+            h1 { color: #2c3e50; }
+            .content-box { display: flex; gap: 20px; }
+            .section { flex: 1; border: 1px solid #ddd; padding: 10px; }
+        }
+
+        /* --- 判斷邏輯：手機版 (螢幕寬度 <= 768px) --- */
+        @media screen and (max-width: 768px) {
+            .mobile-content { display: block; background-color: #fff0f0; }
+            h1 { color: #e74c3c; font-size: 1.5rem; }
+            .section { margin-bottom: 20px; border-bottom: 2px dashed #ff7675; padding-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="desktop-content">
+        <h1>💻 桌面版專屬介面</h1>
+        <div class="content-box">
+            <div class="section">
+                <h3>個人簡介</h3>
+                <p>這是桌面版顯示的詳細簡介，內容較為豐富且採用並排設計。</p>
+            </div>
+            <div class="section">
+                <h3>興趣專長</h3>
+                <p>專長：網頁開發、資料分析。<br>興趣：攝影、旅行。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-content">
+        <h1>📱 手機版專屬介面</h1>
+        <div class="section">
+            <h3>👤 個人簡介</h3>
+            <p>手機版採用直向堆疊排版，方便滑動閱讀。</p>
+        </div>
+        <div class="section">
+            <h3>🎯 興趣專長</h3>
+            <p>專長：Web Design / 興趣：Hiking</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
